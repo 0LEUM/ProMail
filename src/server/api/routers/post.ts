@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
@@ -10,33 +11,21 @@ export const postRouter = createTRPCRouter({
       };
     }),
 
-  // ✅ Create a new user (instead of post)
   create: publicProcedure
-    .input(
-      z.object({
-        emailAddress: z.string().email(),
-        firstName: z.string().min(1),
-        lastName: z.string().min(1),
-        imageUrl: z.string().url().optional(),
-      })
-    )
+    .input(z.object({ name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
-      return await ctx.db.user.create({
+      return ctx.db.post.create({
         data: {
-          emailAddress: input.emailAddress,
-          firstName: input.firstName,
-          lastName: input.lastName,
-          imageUrl: input.imageUrl || "",
+          name: input.name,
         },
       });
     }),
 
-  // ✅ Fetch the latest user (instead of latest post)
   getLatest: publicProcedure.query(async ({ ctx }) => {
-    const user = await ctx.db.user.findFirst({
-      orderBy: { id: "desc" },
+    const post = await ctx.db.post.findFirst({
+      orderBy: { createdAt: "desc" },
     });
 
-    return user ?? null;
+    return post ?? null;
   }),
 });
