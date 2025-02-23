@@ -4,7 +4,7 @@ import { db } from "@/server/db"
 
 export const POST = async (req: Request) => {
     const {data} = await req.json()
-    console.log('clerk web hook received', data)
+    // console.log('clerk web hook received', data)
 
     const emailAddress = data.email_addresses[0].email_address
     const firstName = data.first_name
