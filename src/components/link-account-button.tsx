@@ -10,6 +10,7 @@ const LinkAccountButton = () => {
     <div>
       <Button onClick={async()=>{
         const authUrl = await getAurinkoAuthUrl('Google')
+        window.location.href = authUrl
       }}>
         Link Account
       </Button>
