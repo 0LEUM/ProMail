@@ -22,6 +22,16 @@ model User {
     firstName String
     lastName String
     imageUrl String
+    accounts Account[]
 }
 
+model Account {
+    id String @id @default(cuid())
+    userid String
+    accessToken String @unique
+    emailAddress String
+    name String
+
+    user User @relation(fields: [userid], references: [id])
+}
 
