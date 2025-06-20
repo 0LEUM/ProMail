@@ -1,1 +1,1 @@
-![Flowchart](Flowchart.png)
+![Flowchart](ProMail_Flowchart.png)
